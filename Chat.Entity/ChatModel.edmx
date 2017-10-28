@@ -1,0 +1,395 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ChatDBModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="ChatDBModelStoreContainer">
+    <EntitySet Name="Users" EntityType="ChatDBModel.Store.Users" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Messages" EntityType="ChatDBModel.Store.Messages" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="MessageThreads" EntityType="ChatDBModel.Store.MessageThreads" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="MessageReadStatus" EntityType="ChatDBModel.Store.MessageReadStatus" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ThreadParticipants" EntityType="ChatDBModel.Store.ThreadParticipants" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="UserThreadParticipant" Association="ChatDBModel.Store.UserThreadParticipant">
+      <End Role="User" EntitySet="Users" />
+      <End Role="ThreadParticipant" EntitySet="ThreadParticipants" />
+    </AssociationSet>
+    <AssociationSet Name="UserMessageReadStatus" Association="ChatDBModel.Store.UserMessageReadStatus">
+      <End Role="User" EntitySet="Users" />
+      <End Role="MessageReadStatus" EntitySet="MessageReadStatus" />
+    </AssociationSet>
+    <AssociationSet Name="UserMessage" Association="ChatDBModel.Store.UserMessage">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Message" EntitySet="Messages" />
+    </AssociationSet>
+    <AssociationSet Name="MessageMessageReadStatus" Association="ChatDBModel.Store.MessageMessageReadStatus">
+      <End Role="Message" EntitySet="Messages" />
+      <End Role="MessageReadStatus" EntitySet="MessageReadStatus" />
+    </AssociationSet>
+    <AssociationSet Name="MessageThreadThreadParticipant" Association="ChatDBModel.Store.MessageThreadThreadParticipant">
+      <End Role="MessageThread" EntitySet="MessageThreads" />
+      <End Role="ThreadParticipant" EntitySet="ThreadParticipants" />
+    </AssociationSet>
+    <AssociationSet Name="MessageThreadMessage" Association="ChatDBModel.Store.MessageThreadMessage">
+      <End Role="MessageThread" EntitySet="MessageThreads" />
+      <End Role="Message" EntitySet="Messages" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="UserEmail" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="UserPassword" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="dateCreated" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="isActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Messages">
+    <Key>
+      <PropertyRef Name="MessageId" />
+    </Key>
+    <Property Name="MessageId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SendDate" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="MessageBody" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="UserUserId" Type="int" Nullable="false" />
+    <Property Name="MessageThreadThreadId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="MessageThreads">
+    <Key>
+      <PropertyRef Name="ThreadId" />
+    </Key>
+    <Property Name="ThreadId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+  </EntityType>
+  <EntityType Name="MessageReadStatus">
+    <Key>
+      <PropertyRef Name="MessageReadStatusId" />
+    </Key>
+    <Property Name="MessageReadStatusId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ReadDate" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="UserUserId" Type="int" Nullable="false" />
+    <Property Name="MessageMessageId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ThreadParticipants">
+    <Key>
+      <PropertyRef Name="ThreadParticipantId" />
+    </Key>
+    <Property Name="ThreadParticipantId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserUserId" Type="int" Nullable="false" />
+    <Property Name="MessageThreadThreadId" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="UserThreadParticipant">
+    <End Role="User" Type="ChatDBModel.Store.Users" Multiplicity="1" />
+    <End Role="ThreadParticipant" Type="ChatDBModel.Store.ThreadParticipants" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="ThreadParticipant">
+        <PropertyRef Name="UserUserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="UserMessageReadStatus">
+    <End Role="User" Type="ChatDBModel.Store.Users" Multiplicity="1" />
+    <End Role="MessageReadStatus" Type="ChatDBModel.Store.MessageReadStatus" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="MessageReadStatus">
+        <PropertyRef Name="UserUserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="UserMessage">
+    <End Role="User" Type="ChatDBModel.Store.Users" Multiplicity="1" />
+    <End Role="Message" Type="ChatDBModel.Store.Messages" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="Message">
+        <PropertyRef Name="UserUserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="MessageMessageReadStatus">
+    <End Role="Message" Type="ChatDBModel.Store.Messages" Multiplicity="1" />
+    <End Role="MessageReadStatus" Type="ChatDBModel.Store.MessageReadStatus" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Message">
+        <PropertyRef Name="MessageId" />
+      </Principal>
+      <Dependent Role="MessageReadStatus">
+        <PropertyRef Name="MessageMessageId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="MessageThreadThreadParticipant">
+    <End Role="MessageThread" Type="ChatDBModel.Store.MessageThreads" Multiplicity="1" />
+    <End Role="ThreadParticipant" Type="ChatDBModel.Store.ThreadParticipants" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MessageThread">
+        <PropertyRef Name="ThreadId" />
+      </Principal>
+      <Dependent Role="ThreadParticipant">
+        <PropertyRef Name="MessageThreadThreadId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="MessageThreadMessage">
+    <End Role="MessageThread" Type="ChatDBModel.Store.MessageThreads" Multiplicity="1" />
+    <End Role="Message" Type="ChatDBModel.Store.Messages" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MessageThread">
+        <PropertyRef Name="ThreadId" />
+      </Principal>
+      <Dependent Role="Message">
+        <PropertyRef Name="MessageThreadThreadId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ChatDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="ChatDBContext" annotation:LazyLoadingEnabled="true" >
+          <EntitySet Name="Users" EntityType="ChatDBModel.User" />
+          <EntitySet Name="Messages" EntityType="ChatDBModel.Message" />
+          <EntitySet Name="MessageThreads" EntityType="ChatDBModel.MessageThread" />
+          <EntitySet Name="MessageReadStatus" EntityType="ChatDBModel.MessageReadStatus" />
+          <EntitySet Name="ThreadParticipants" EntityType="ChatDBModel.ThreadParticipant" />
+          <AssociationSet Name="UserThreadParticipant" Association="ChatDBModel.UserThreadParticipant">
+            <End Role="User" EntitySet="Users" />
+            <End Role="ThreadParticipant" EntitySet="ThreadParticipants" />
+          </AssociationSet>
+          <AssociationSet Name="UserMessageReadStatus" Association="ChatDBModel.UserMessageReadStatus">
+            <End Role="User" EntitySet="Users" />
+            <End Role="MessageReadStatus" EntitySet="MessageReadStatus" />
+          </AssociationSet>
+          <AssociationSet Name="UserMessage" Association="ChatDBModel.UserMessage">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Message" EntitySet="Messages" />
+          </AssociationSet>
+          <AssociationSet Name="MessageMessageReadStatus" Association="ChatDBModel.MessageMessageReadStatus">
+            <End Role="Message" EntitySet="Messages" />
+            <End Role="MessageReadStatus" EntitySet="MessageReadStatus" />
+          </AssociationSet>
+          <AssociationSet Name="MessageThreadThreadParticipant" Association="ChatDBModel.MessageThreadThreadParticipant">
+            <End Role="MessageThread" EntitySet="MessageThreads" />
+            <End Role="ThreadParticipant" EntitySet="ThreadParticipants" />
+          </AssociationSet>
+          <AssociationSet Name="MessageThreadMessage" Association="ChatDBModel.MessageThreadMessage">
+            <End Role="MessageThread" EntitySet="MessageThreads" />
+            <End Role="Message" EntitySet="Messages" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" Nullable="false" />
+          <Property Name="UserEmail" Type="String" Nullable="false" />
+          <Property Name="UserPassword" Type="String" Nullable="false" />
+          <Property Name="dateCreated" Type="String" Nullable="false" />
+          <Property Name="isActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="ThreadParticipants" Relationship="ChatDBModel.UserThreadParticipant" FromRole="User" ToRole="ThreadParticipant" />
+          <NavigationProperty Name="MessageReadStatus" Relationship="ChatDBModel.UserMessageReadStatus" FromRole="User" ToRole="MessageReadStatus" />
+          <NavigationProperty Name="Messages" Relationship="ChatDBModel.UserMessage" FromRole="User" ToRole="Message" />
+        </EntityType>
+        <EntityType Name="Message">
+          <Key>
+            <PropertyRef Name="MessageId" />
+          </Key>
+          <Property Name="MessageId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SendDate" Type="String" Nullable="false" />
+          <Property Name="MessageBody" Type="String" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="ChatDBModel.UserMessage" FromRole="Message" ToRole="User" />
+          <Property Name="UserUserId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="MessageReadStatus" Relationship="ChatDBModel.MessageMessageReadStatus" FromRole="Message" ToRole="MessageReadStatus" />
+          <NavigationProperty Name="MessageThread" Relationship="ChatDBModel.MessageThreadMessage" FromRole="Message" ToRole="MessageThread" />
+          <Property Name="MessageThreadThreadId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MessageThread">
+          <Key>
+            <PropertyRef Name="ThreadId" />
+          </Key>
+          <Property Name="ThreadId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="ThreadParticipants" Relationship="ChatDBModel.MessageThreadThreadParticipant" FromRole="MessageThread" ToRole="ThreadParticipant" />
+          <NavigationProperty Name="Messages" Relationship="ChatDBModel.MessageThreadMessage" FromRole="MessageThread" ToRole="Message" />
+        </EntityType>
+        <EntityType Name="MessageReadStatus">
+          <Key>
+            <PropertyRef Name="MessageReadStatusId" />
+          </Key>
+          <Property Name="MessageReadStatusId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ReadDate" Type="String" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="ChatDBModel.UserMessageReadStatus" FromRole="MessageReadStatus" ToRole="User" />
+          <Property Name="UserUserId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Message" Relationship="ChatDBModel.MessageMessageReadStatus" FromRole="MessageReadStatus" ToRole="Message" />
+          <Property Name="MessageMessageId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ThreadParticipant">
+          <Key>
+            <PropertyRef Name="ThreadParticipantId" />
+          </Key>
+          <Property Name="ThreadParticipantId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="User" Relationship="ChatDBModel.UserThreadParticipant" FromRole="ThreadParticipant" ToRole="User" />
+          <Property Name="UserUserId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="MessageThread" Relationship="ChatDBModel.MessageThreadThreadParticipant" FromRole="ThreadParticipant" ToRole="MessageThread" />
+          <Property Name="MessageThreadThreadId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="UserThreadParticipant">
+          <End Type="ChatDBModel.User" Role="User" Multiplicity="1" />
+          <End Type="ChatDBModel.ThreadParticipant" Role="ThreadParticipant" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="ThreadParticipant">
+              <PropertyRef Name="UserUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="UserMessageReadStatus">
+          <End Type="ChatDBModel.User" Role="User" Multiplicity="1" />
+          <End Type="ChatDBModel.MessageReadStatus" Role="MessageReadStatus" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="MessageReadStatus">
+              <PropertyRef Name="UserUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="UserMessage">
+          <End Type="ChatDBModel.User" Role="User" Multiplicity="1" />
+          <End Type="ChatDBModel.Message" Role="Message" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Message">
+              <PropertyRef Name="UserUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="MessageMessageReadStatus">
+          <End Type="ChatDBModel.Message" Role="Message" Multiplicity="1" />
+          <End Type="ChatDBModel.MessageReadStatus" Role="MessageReadStatus" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Message">
+              <PropertyRef Name="MessageId" />
+            </Principal>
+            <Dependent Role="MessageReadStatus">
+              <PropertyRef Name="MessageMessageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="MessageThreadThreadParticipant">
+          <End Type="ChatDBModel.MessageThread" Role="MessageThread" Multiplicity="1" />
+          <End Type="ChatDBModel.ThreadParticipant" Role="ThreadParticipant" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MessageThread">
+              <PropertyRef Name="ThreadId" />
+            </Principal>
+            <Dependent Role="ThreadParticipant">
+              <PropertyRef Name="MessageThreadThreadId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="MessageThreadMessage">
+          <End Type="ChatDBModel.MessageThread" Role="MessageThread" Multiplicity="1" />
+          <End Type="ChatDBModel.Message" Role="Message" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MessageThread">
+              <PropertyRef Name="ThreadId" />
+            </Principal>
+            <Dependent Role="Message">
+              <PropertyRef Name="MessageThreadThreadId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ChatDBModelStoreContainer" CdmEntityContainer="ChatDBContext">
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="IsTypeOf(ChatDBModel.User)">
+        <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="UserEmail" ColumnName="UserEmail" />
+          <ScalarProperty Name="UserPassword" ColumnName="UserPassword" />
+          <ScalarProperty Name="dateCreated" ColumnName="dateCreated" />
+          <ScalarProperty Name="isActive" ColumnName="isActive" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Messages">
+      <EntityTypeMapping TypeName="IsTypeOf(ChatDBModel.Message)">
+        <MappingFragment StoreEntitySet="Messages">
+          <ScalarProperty Name="MessageId" ColumnName="MessageId" />
+          <ScalarProperty Name="SendDate" ColumnName="SendDate" />
+          <ScalarProperty Name="MessageBody" ColumnName="MessageBody" />
+          <ScalarProperty Name="UserUserId" ColumnName="UserUserId" />
+          <ScalarProperty Name="MessageThreadThreadId" ColumnName="MessageThreadThreadId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MessageThreads">
+      <EntityTypeMapping TypeName="IsTypeOf(ChatDBModel.MessageThread)">
+        <MappingFragment StoreEntitySet="MessageThreads">
+          <ScalarProperty Name="ThreadId" ColumnName="ThreadId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MessageReadStatus">
+      <EntityTypeMapping TypeName="IsTypeOf(ChatDBModel.MessageReadStatus)">
+        <MappingFragment StoreEntitySet="MessageReadStatus">
+          <ScalarProperty Name="MessageReadStatusId" ColumnName="MessageReadStatusId" />
+          <ScalarProperty Name="ReadDate" ColumnName="ReadDate" />
+          <ScalarProperty Name="UserUserId" ColumnName="UserUserId" />
+          <ScalarProperty Name="MessageMessageId" ColumnName="MessageMessageId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ThreadParticipants">
+      <EntityTypeMapping TypeName="IsTypeOf(ChatDBModel.ThreadParticipant)">
+        <MappingFragment StoreEntitySet="ThreadParticipants">
+          <ScalarProperty Name="ThreadParticipantId" ColumnName="ThreadParticipantId" />
+          <ScalarProperty Name="UserUserId" ColumnName="UserUserId" />
+          <ScalarProperty Name="MessageThreadThreadId" ColumnName="MessageThreadThreadId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

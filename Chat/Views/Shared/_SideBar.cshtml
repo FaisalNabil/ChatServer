@@ -1,0 +1,15 @@
+﻿@model IEnumerable<Chat.Entity.User>
+
+<div class="sidebar">
+    <ul class="sidebar-nav">
+        @foreach (var item in Model)
+        {
+            if (item.UserId != Convert.ToInt32(Session["LoggedInUser"]))
+            {
+                <li class="sidebar-brand active">
+                    @Html.ActionLink(item.UserName, "ChatWindow", new { userId = item.UserId })
+                </li>
+            }
+        }
+    </ul>
+</div>

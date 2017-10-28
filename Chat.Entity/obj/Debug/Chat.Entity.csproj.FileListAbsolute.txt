@@ -1,0 +1,10 @@
+F:\Codes\Chat Application\Chat\Chat.Entity\bin\Debug\Chat.Entity.dll.config
+F:\Codes\Chat Application\Chat\Chat.Entity\bin\Debug\Chat.Entity.dll
+F:\Codes\Chat Application\Chat\Chat.Entity\bin\Debug\Chat.Entity.pdb
+F:\Codes\Chat Application\Chat\Chat.Entity\bin\Debug\EntityFramework.dll
+F:\Codes\Chat Application\Chat\Chat.Entity\bin\Debug\EntityFramework.SqlServer.dll
+F:\Codes\Chat Application\Chat\Chat.Entity\bin\Debug\EntityFramework.xml
+F:\Codes\Chat Application\Chat\Chat.Entity\bin\Debug\EntityFramework.SqlServer.xml
+F:\Codes\Chat Application\Chat\Chat.Entity\obj\Debug\Chat.Entity.csprojResolveAssemblyReference.cache
+F:\Codes\Chat Application\Chat\Chat.Entity\obj\Debug\Chat.Entity.dll
+F:\Codes\Chat Application\Chat\Chat.Entity\obj\Debug\Chat.Entity.pdb

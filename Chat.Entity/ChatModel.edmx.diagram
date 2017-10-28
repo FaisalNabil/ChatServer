@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="f75a55149f604cdc8581b9dfc6c386b3" Name="Diagram1" >
+        <EntityTypeShape EntityType="ChatDBModel.User" Width="1.5" PointX="1.625" PointY="0.5" />
+        <EntityTypeShape EntityType="ChatDBModel.Message" Width="1.5" PointX="4.375" PointY="0.5" />
+        <EntityTypeShape EntityType="ChatDBModel.MessageThread" Width="1.5" PointX="6.625" PointY="0.5" />
+        <EntityTypeShape EntityType="ChatDBModel.MessageReadStatus" Width="1.5" PointX="7.125" PointY="4.875" />
+        <EntityTypeShape EntityType="ChatDBModel.ThreadParticipant" Width="1.5" PointX="2.375" PointY="4.875" />
+        <AssociationConnector Association="ChatDBModel.UserThreadParticipant" />
+        <AssociationConnector Association="ChatDBModel.UserMessageReadStatus" />
+        <AssociationConnector Association="ChatDBModel.UserMessage" />
+        <AssociationConnector Association="ChatDBModel.MessageMessageReadStatus" />
+        <AssociationConnector Association="ChatDBModel.MessageThreadThreadParticipant" />
+        <AssociationConnector Association="ChatDBModel.MessageThreadMessage" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

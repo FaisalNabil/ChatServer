@@ -1,0 +1,58 @@
+﻿@model Chat.Models.ModelMessaging
+
+@{
+    Layout = "~/Views/Shared/_UserHomeLayout.cshtml";
+    ViewBag.Title = "Chat";
+}
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>ModelMessaging</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="chatWindow">
+            @try
+            {
+                foreach (var item in Model.MessagesList)
+                {
+                    if (item.UserUserId == Convert.ToInt32(Session["LoggedInUser"]))
+                    {
+                        <p style="text-align:right">@item.MessageBody</p>
+                    }
+                    else
+                    {
+                        <p>@item.User.UserName : @item.MessageBody</p>
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.newMessage, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.newMessage, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.newMessage, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        @Html.HiddenFor(model => model.ReceiverId)
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Send" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+@section scripts {
+    <script src="~/Scripts/jquery.signalR-2.2.2.min.js"></script>
+    <script src="~/signalr/js"></script>
+    <script src="~/Scripts/SignalR.js"></script>
+}

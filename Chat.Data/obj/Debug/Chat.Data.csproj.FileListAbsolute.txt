@@ -1,0 +1,7 @@
+F:\Codes\Chat Application\Chat\Chat.Data\bin\Debug\Chat.Data.dll
+F:\Codes\Chat Application\Chat\Chat.Data\bin\Debug\Chat.Data.pdb
+F:\Codes\Chat Application\Chat\Chat.Data\bin\Debug\Chat.Entity.dll
+F:\Codes\Chat Application\Chat\Chat.Data\bin\Debug\Chat.Entity.pdb
+F:\Codes\Chat Application\Chat\Chat.Data\obj\Debug\Chat.Data.csprojResolveAssemblyReference.cache
+F:\Codes\Chat Application\Chat\Chat.Data\obj\Debug\Chat.Data.dll
+F:\Codes\Chat Application\Chat\Chat.Data\obj\Debug\Chat.Data.pdb
